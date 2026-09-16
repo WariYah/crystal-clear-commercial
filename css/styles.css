@@ -304,8 +304,9 @@ button, input, select, textarea {
 }
 
 .logo-img {
-  height: 52px;
+  height: 62px;
   width: auto;
+  object-fit: contain;
 }
 
 .desktop-nav ul {
@@ -402,7 +403,9 @@ button, input, select, textarea {
 }
 
 .drawer-logo {
-  height: 42px;
+  height: 52px;
+  width: auto;
+  object-fit: contain;
 }
 
 .drawer-close {
@@ -1556,7 +1559,9 @@ button, input, select, textarea {
 }
 
 .cred-logo {
-  height: 40px;
+  height: 50px;
+  width: auto;
+  object-fit: contain;
 }
 
 .cred-pill {
@@ -2060,7 +2065,9 @@ button, input, select, textarea {
 }
 
 .footer-logo {
-  height: 48px;
+  height: 58px;
+  width: auto;
+  object-fit: contain;
   margin-bottom: 18px;
 }
 
@@ -2257,7 +2264,9 @@ button, input, select, textarea {
 }
 
 .modal-logo {
-  height: 55px;
+  height: 65px;
+  width: auto;
+  object-fit: contain;
   margin: 0 auto 14px;
 }
 
