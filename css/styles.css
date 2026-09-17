@@ -2586,7 +2586,8 @@ button, input, select, textarea {
 }
 
 
-/* Google reCAPTCHA Responsive Container */
+/* Web3Forms Spam Protection (hCaptcha) Responsive Container */
+.h-captcha,
 .g-recaptcha {
   display: flex;
   justify-content: flex-start;
@@ -2594,16 +2595,19 @@ button, input, select, textarea {
   max-width: 100%;
 }
 
+.calc-sidebar .h-captcha,
 .calc-sidebar .g-recaptcha {
   justify-content: center;
 }
 
 @media (max-width: 400px) {
+  .h-captcha,
   .g-recaptcha {
     transform: scale(0.88);
     transform-origin: 0 0;
   }
-  .calc-sidebar .g-recaptcha {
+  .calc-sidebar .h-captcha,
+.calc-sidebar .g-recaptcha {
     transform-origin: center center;
   }
 }

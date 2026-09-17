@@ -567,8 +567,7 @@ function selectServiceInCalc(serviceId) {
   }
 }
 
-// 7. Form Submissions with Web3Forms & Google reCAPTCHA v2
-const RECAPTCHA_SITE_KEY = '6LeaDMEtAAAAAH1BgOYF_j312MWXYbQKJZsSDQgR';
+// 7. Form Submissions with Web3Forms & Free Spam Protection
 async function handleQuoteSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('calcLockInForm');
@@ -581,24 +580,14 @@ async function handleQuoteSubmit(e) {
     errorEl.textContent = '';
   }
 
-  // Verify reCAPTCHA
-  let captchaToken = '';
-  const textarea = form.querySelector('[name="g-recaptcha-response"]');
-  if (textarea && textarea.value) {
-    captchaToken = textarea.value;
-  } else if (typeof grecaptcha !== 'undefined') {
-    try { captchaToken = grecaptcha.getResponse(0); } catch(err) {}
-    if (!captchaToken) {
-      try { captchaToken = grecaptcha.getResponse(); } catch(err) {}
-    }
-  }
-
-  if (!captchaToken) {
+  // Check hCaptcha response if widget is present and initialized
+  const hCaptchaTextarea = form.querySelector('[name="h-captcha-response"]');
+  if (hCaptchaTextarea && !hCaptchaTextarea.value.trim()) {
     if (errorEl) {
-      errorEl.textContent = "Please check the 'I'm not a robot' reCAPTCHA box above.";
+      errorEl.textContent = "Please complete the captcha verification checkbox above.";
       errorEl.style.display = 'block';
     } else {
-      alert('Please complete the reCAPTCHA verification before submitting.');
+      alert("Please complete the captcha verification checkbox before submitting.");
     }
     return;
   }
@@ -659,13 +648,6 @@ async function handleQuoteSubmit(e) {
 
   try {
     const formData = new FormData(form);
-    if (!formData.get('g-recaptcha-response') && captchaToken) {
-      formData.set('g-recaptcha-response', captchaToken);
-    }
-    // Also include recaptcha_response for compatibility
-    if (captchaToken) {
-      formData.set('recaptcha_response', captchaToken);
-    }
 
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -691,8 +673,8 @@ async function handleQuoteSubmit(e) {
     btn.disabled = false;
     btn.innerHTML = originalBtnContent;
     form.style.opacity = '1';
-    if (typeof grecaptcha !== 'undefined') {
-      try { grecaptcha.reset(0); } catch(e) {}
+    if (typeof hcaptcha !== 'undefined' && typeof hcaptcha.reset === 'function') {
+      try { hcaptcha.reset(); } catch(e) {}
     }
   }
 }
@@ -709,24 +691,14 @@ async function handleContactSubmit(e) {
     errorEl.textContent = '';
   }
 
-  // Verify reCAPTCHA
-  let captchaToken = '';
-  const textarea = form.querySelector('[name="g-recaptcha-response"]');
-  if (textarea && textarea.value) {
-    captchaToken = textarea.value;
-  } else if (typeof grecaptcha !== 'undefined') {
-    try { captchaToken = grecaptcha.getResponse(1); } catch(err) {}
-    if (!captchaToken) {
-      try { captchaToken = grecaptcha.getResponse(); } catch(err) {}
-    }
-  }
-
-  if (!captchaToken) {
+  // Check hCaptcha response if widget is present and initialized
+  const hCaptchaTextarea = form.querySelector('[name="h-captcha-response"]');
+  if (hCaptchaTextarea && !hCaptchaTextarea.value.trim()) {
     if (errorEl) {
-      errorEl.textContent = "Please check the 'I'm not a robot' reCAPTCHA box above.";
+      errorEl.textContent = "Please complete the captcha verification checkbox above.";
       errorEl.style.display = 'block';
     } else {
-      alert('Please complete the reCAPTCHA verification before submitting.');
+      alert("Please complete the captcha verification checkbox before submitting.");
     }
     return;
   }
@@ -739,13 +711,6 @@ async function handleContactSubmit(e) {
 
   try {
     const formData = new FormData(form);
-    if (!formData.get('g-recaptcha-response') && captchaToken) {
-      formData.set('g-recaptcha-response', captchaToken);
-    }
-    // Also include recaptcha_response for compatibility
-    if (captchaToken) {
-      formData.set('recaptcha_response', captchaToken);
-    }
 
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -771,8 +736,8 @@ async function handleContactSubmit(e) {
     btn.disabled = false;
     btn.innerHTML = originalBtnContent;
     form.style.opacity = '1';
-    if (typeof grecaptcha !== 'undefined') {
-      try { grecaptcha.reset(1); } catch(e) {}
+    if (typeof hcaptcha !== 'undefined' && typeof hcaptcha.reset === 'function') {
+      try { hcaptcha.reset(); } catch(e) {}
     }
   }
 }
