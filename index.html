@@ -17,6 +17,7 @@
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 
@@ -745,13 +746,31 @@
                 <div class="lock-in-box">
                   <h4>Lock In This Quote &amp; Book Free Survey</h4>
                   <form id="calcLockInForm" onsubmit="handleQuoteSubmit(event)">
+                    <!-- Web3Forms Configuration -->
+                    <input type="hidden" name="access_key" value="3f22365c-f259-4e62-88ad-e85698c4e851">
+                    <input type="hidden" name="subject" value="New Instant Quote &amp; Survey Request - Crystal Clear">
+                    <input type="hidden" name="from_name" value="Crystal Clear Quote Estimator">
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                    
+                    <!-- Dynamic Calculator Breakdown -->
+                    <input type="hidden" name="selected_sector" id="calcHiddenPropType" value="">
+                    <input type="hidden" name="floor_area" id="calcHiddenArea" value="">
+                    <input type="hidden" name="frequency" id="calcHiddenFreq" value="">
+                    <input type="hidden" name="selected_addons" id="calcHiddenAddons" value="">
+                    <input type="hidden" name="estimated_cost" id="calcHiddenPrice" value="">
+
                     <div class="form-row">
-                      <input type="text" id="quoteName" placeholder="Your Name" required class="input-light">
-                      <input type="tel" id="quotePhone" placeholder="Phone Number" required class="input-light">
+                      <input type="text" id="quoteName" name="name" placeholder="Your Name" required class="input-light">
+                      <input type="tel" id="quotePhone" name="phone" placeholder="Phone Number" required class="input-light">
                     </div>
-                    <input type="email" id="quoteEmail" placeholder="Company Email Address" required class="input-light">
-                    <input type="text" id="quoteAddress" placeholder="Site Postcode / London Address" required class="input-light">
-                    <button type="submit" class="btn btn-primary btn-block">
+                    <input type="email" id="quoteEmail" name="email" placeholder="Company Email Address" required class="input-light">
+                    <input type="text" id="quoteAddress" name="site_address" placeholder="Site Postcode / London Address" required class="input-light">
+                    
+                    <!-- Google reCAPTCHA v2 Widget -->
+                    <div class="g-recaptcha" data-sitekey="6Lc7AsEtAAAAAC2wqkWbPqciy2XsGbf013zrFiks6" style="margin-bottom: 12px;"></div>
+                    <div id="calcFormError" class="form-error-msg" style="display: none; color: #ff6b6b; margin-bottom: 10px; font-size: 0.85rem; text-align: center; background: rgba(255,0,0,0.1); padding: 8px; border-radius: 4px;"></div>
+
+                    <button type="submit" id="calcSubmitBtn" class="btn btn-primary btn-block">
                       <span>Request Formal Quote &amp; Survey</span>
                       <i class="fa-solid fa-arrow-right"></i>
                     </button>
@@ -1123,72 +1142,82 @@
               <p>Fill in your details below and an Operations specialist will be in touch within 2 hours.</p>
 
               <form id="mainContactForm" onsubmit="handleContactSubmit(event)">
+                <!-- Web3Forms Configuration -->
+                <input type="hidden" name="access_key" value="3f22365c-f259-4e62-88ad-e85698c4e851">
+                <input type="hidden" name="subject" value="New Commercial Cleaning Inquiry - Crystal Clear Website">
+                <input type="hidden" name="from_name" value="Crystal Clear Website Form">
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
                 <div class="form-row">
                   <div class="form-group">
                     <label for="contactFullName">Full Name *</label>
-                    <input type="text" id="contactFullName" required placeholder="John Smith">
+                    <input type="text" id="contactFullName" name="name" required placeholder="John Smith">
                   </div>
                   <div class="form-group">
                     <label for="contactCompany">Company / Business Name *</label>
-                    <input type="text" id="contactCompany" required placeholder="Acme Corporation">
+                    <input type="text" id="contactCompany" name="company" required placeholder="Acme Corporation">
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group">
                     <label for="contactEmail">Work Email *</label>
-                    <input type="email" id="contactEmail" required placeholder="john@company.com">
+                    <input type="email" id="contactEmail" name="email" required placeholder="john@company.com">
                   </div>
                   <div class="form-group">
                     <label for="contactPhone">Telephone *</label>
-                    <input type="tel" id="contactPhone" required placeholder="020 1234 5678">
+                    <input type="tel" id="contactPhone" name="phone" required placeholder="020 1234 5678">
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group">
                     <label for="contactService">Required Service *</label>
-                    <select id="contactService" required>
+                    <select id="contactService" name="service" required>
                       <option value="">Select Service...</option>
-                      <option value="commercial-contract">Commercial &amp; Contract Cleaning</option>
-                      <option value="daily-office">Daily Office Cleaning</option>
-                      <option value="retail-venue">Retail &amp; Venue Cleaning</option>
-                      <option value="property-construction">Property &amp; Construction Cleaning</option>
-                      <option value="deep-cleaning">Deep Cleaning &amp; Sanitisation</option>
-                      <option value="handyman-services">Handyman Services</option>
-                      <option value="window-cleaning">Window Cleaning</option>
-                      <option value="janitorial-services">Janitorial Services</option>
-                      <option value="trauma-cleaning">Trauma &amp; Extreme Cleaning</option>
-                      <option value="compliance-cleaning">Specialist &amp; Compliance Cleaning</option>
-                      <option value="medical-cleaning">Medical Cleaning</option>
-                      <option value="floor-maintenance">Floor Maintenance &amp; Cleaning</option>
-                      <option value="housekeeping-services">Housekeeping Services</option>
-                      <option value="full-facility">Multiple Services / Whole Facility SLA</option>
+                      <option value="Commercial &amp; Contract Cleaning">Commercial &amp; Contract Cleaning</option>
+                      <option value="Daily Office Cleaning">Daily Office Cleaning</option>
+                      <option value="Retail &amp; Venue Cleaning">Retail &amp; Venue Cleaning</option>
+                      <option value="Property &amp; Construction Cleaning">Property &amp; Construction Cleaning</option>
+                      <option value="Deep Cleaning &amp; Sanitisation">Deep Cleaning &amp; Sanitisation</option>
+                      <option value="Handyman Services">Handyman Services</option>
+                      <option value="Window Cleaning">Window Cleaning</option>
+                      <option value="Janitorial Services">Janitorial Services</option>
+                      <option value="Trauma &amp; Extreme Cleaning">Trauma &amp; Extreme Cleaning</option>
+                      <option value="Specialist &amp; Compliance Cleaning">Specialist &amp; Compliance Cleaning</option>
+                      <option value="Medical Cleaning">Medical Cleaning</option>
+                      <option value="Floor Maintenance &amp; Cleaning">Floor Maintenance &amp; Cleaning</option>
+                      <option value="Housekeeping Services">Housekeeping Services</option>
+                      <option value="Multiple Services / Whole Facility SLA">Multiple Services / Whole Facility SLA</option>
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="contactFrequency">Desired Frequency</label>
-                    <select id="contactFrequency">
-                      <option value="daily">Daily</option>
-                      <option value="3week">3x per Week</option>
-                      <option value="weekly">Weekly</option>
-                      <option value="fortnightly">Fortnightly</option>
-                      <option value="one-off">One-Off Project</option>
+                    <select id="contactFrequency" name="frequency">
+                      <option value="Daily">Daily</option>
+                      <option value="3x per Week">3x per Week</option>
+                      <option value="Weekly">Weekly</option>
+                      <option value="Fortnightly">Fortnightly</option>
+                      <option value="One-Off Project">One-Off Project</option>
                     </select>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label for="contactLocation">Site Address &amp; Postcode *</label>
-                  <input type="text" id="contactLocation" required placeholder="e.g. 10 Finsbury Square, London, EC2A 1AF">
+                  <input type="text" id="contactLocation" name="site_address" required placeholder="e.g. 10 Finsbury Square, London, EC2A 1AF">
                 </div>
 
                 <div class="form-group">
                   <label for="contactMessage">Premises Details or Specific Requirements</label>
-                  <textarea id="contactMessage" rows="3" placeholder="Approximate square footage, number of desks, specific access requirements..."></textarea>
+                  <textarea id="contactMessage" name="message" rows="3" placeholder="Approximate square footage, number of desks, specific access requirements..."></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                <!-- Google reCAPTCHA v2 Widget -->
+                <div class="g-recaptcha" data-sitekey="6Lc7AsEtAAAAAC2wqkWbPqciy2XsGbf013zrFiks6" style="margin-bottom: 20px;"></div>
+                <div id="contactFormError" class="form-error-msg" style="display: none; color: #e53e3e; margin-bottom: 15px; font-size: 0.9rem; background: #fff5f5; padding: 10px; border-radius: 6px; border: 1px solid #feb2b2;"></div>
+
+                <button type="submit" id="contactSubmitBtn" class="btn btn-primary btn-block btn-lg">
                   <span>Submit Quote Request</span>
                   <i class="fa-solid fa-paper-plane"></i>
                 </button>

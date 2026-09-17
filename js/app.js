@@ -567,31 +567,213 @@ function selectServiceInCalc(serviceId) {
   }
 }
 
-// 7. Form Submissions
-function handleQuoteSubmit(e) {
+// 7. Form Submissions with Web3Forms & Google reCAPTCHA v2
+async function handleQuoteSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('calcLockInForm');
   const msg = document.getElementById('quoteSuccessMessage');
-  form.style.opacity = '0.6';
-  form.querySelector('button').disabled = true;
+  const errorEl = document.getElementById('calcFormError');
+  const btn = document.getElementById('calcSubmitBtn') || form.querySelector('button[type="submit"]');
 
-  setTimeout(() => {
-    form.style.display = 'none';
-    msg.style.display = 'block';
-  }, 600);
+  if (errorEl) {
+    errorEl.style.display = 'none';
+    errorEl.textContent = '';
+  }
+
+  // Verify reCAPTCHA
+  let captchaToken = '';
+  const textarea = form.querySelector('[name="g-recaptcha-response"]');
+  if (textarea && textarea.value) {
+    captchaToken = textarea.value;
+  } else if (typeof grecaptcha !== 'undefined') {
+    try { captchaToken = grecaptcha.getResponse(0); } catch(err) {}
+    if (!captchaToken) {
+      try { captchaToken = grecaptcha.getResponse(); } catch(err) {}
+    }
+  }
+
+  if (!captchaToken) {
+    if (errorEl) {
+      errorEl.textContent = "Please check the 'I'm not a robot' reCAPTCHA box above.";
+      errorEl.style.display = 'block';
+    } else {
+      alert('Please complete the reCAPTCHA verification before submitting.');
+    }
+    return;
+  }
+
+  // Populate dynamic calculator data into hidden inputs
+  const propEl = document.querySelector('input[name="propertyType"]:checked');
+  const freqEl = document.querySelector('input[name="freq"]:checked');
+  const areaVal = document.getElementById('areaSlider') ? document.getElementById('areaSlider').value : '2500';
+  const priceVal = document.getElementById('priceDisplay') ? document.getElementById('priceDisplay').textContent : '';
+  const periodVal = document.getElementById('periodDisplay') ? document.getElementById('periodDisplay').textContent : '';
+
+  const addons = [];
+  if (document.getElementById('addonWindows') && document.getElementById('addonWindows').checked) addons.push('Commercial Window Cleaning');
+  if (document.getElementById('addonCarpets') && document.getElementById('addonCarpets').checked) addons.push('Hot Water Carpet Extraction');
+  if (document.getElementById('addonJanitorial') && document.getElementById('addonJanitorial').checked) addons.push('Washroom & Janitorial Restocking');
+  if (document.getElementById('addonHandyman') && document.getElementById('addonHandyman').checked) addons.push('Facility Handyman & Minor Repairs');
+
+  const propNameMap = {
+    office: 'Office / Commercial',
+    retail: 'Retail Store / Showroom',
+    medical: 'Medical & Healthcare Facility',
+    construction: 'Post-Construction Site',
+    venue: 'Venue / Hospitality',
+    serviced: 'Serviced Accommodation / HMO'
+  };
+
+  const freqNameMap = {
+    daily: 'Daily Commercial Service',
+    '3week': '3x per Week',
+    weekly: 'Weekly Commercial Clean',
+    deep: 'One-Off Intensive Deep Clean'
+  };
+
+  const selectedPropKey = propEl ? propEl.value : 'office';
+  const selectedFreqKey = freqEl ? freqEl.value : 'daily';
+
+  if (document.getElementById('calcHiddenPropType')) {
+    document.getElementById('calcHiddenPropType').value = propNameMap[selectedPropKey] || selectedPropKey;
+  }
+  if (document.getElementById('calcHiddenArea')) {
+    document.getElementById('calcHiddenArea').value = parseInt(areaVal).toLocaleString() + ' sq ft';
+  }
+  if (document.getElementById('calcHiddenFreq')) {
+    document.getElementById('calcHiddenFreq').value = freqNameMap[selectedFreqKey] || selectedFreqKey;
+  }
+  if (document.getElementById('calcHiddenAddons')) {
+    document.getElementById('calcHiddenAddons').value = addons.length > 0 ? addons.join(', ') : 'None selected';
+  }
+  if (document.getElementById('calcHiddenPrice')) {
+    document.getElementById('calcHiddenPrice').value = '£' + priceVal + ' ' + periodVal;
+  }
+
+  // Set loading state
+  const originalBtnContent = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Sending Request...</span>';
+  form.style.opacity = '0.7';
+
+  try {
+    const formData = new FormData(form);
+    if (!formData.get('g-recaptcha-response') && captchaToken) {
+      formData.set('g-recaptcha-response', captchaToken);
+    }
+    // Also include recaptcha_response for compatibility
+    if (captchaToken) {
+      formData.set('recaptcha_response', captchaToken);
+    }
+
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      form.style.display = 'none';
+      if (msg) msg.style.display = 'block';
+    } else {
+      throw new Error(data.message || 'Submission failed. Please check your details and try again.');
+    }
+  } catch (err) {
+    console.error('Quote form submission error:', err);
+    if (errorEl) {
+      errorEl.textContent = err.message || 'Submission failed. Please call us directly on 020 8914 7832.';
+      errorEl.style.display = 'block';
+    } else {
+      alert(err.message || 'Submission failed. Please call us directly on 020 8914 7832.');
+    }
+    btn.disabled = false;
+    btn.innerHTML = originalBtnContent;
+    form.style.opacity = '1';
+    if (typeof grecaptcha !== 'undefined') {
+      try { grecaptcha.reset(0); } catch(e) {}
+    }
+  }
 }
 
-function handleContactSubmit(e) {
+async function handleContactSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('mainContactForm');
   const msg = document.getElementById('contactSuccessMessage');
-  form.style.opacity = '0.6';
-  form.querySelector('button').disabled = true;
+  const errorEl = document.getElementById('contactFormError');
+  const btn = document.getElementById('contactSubmitBtn') || form.querySelector('button[type="submit"]');
 
-  setTimeout(() => {
-    form.style.display = 'none';
-    msg.style.display = 'block';
-  }, 600);
+  if (errorEl) {
+    errorEl.style.display = 'none';
+    errorEl.textContent = '';
+  }
+
+  // Verify reCAPTCHA
+  let captchaToken = '';
+  const textarea = form.querySelector('[name="g-recaptcha-response"]');
+  if (textarea && textarea.value) {
+    captchaToken = textarea.value;
+  } else if (typeof grecaptcha !== 'undefined') {
+    try { captchaToken = grecaptcha.getResponse(1); } catch(err) {}
+    if (!captchaToken) {
+      try { captchaToken = grecaptcha.getResponse(); } catch(err) {}
+    }
+  }
+
+  if (!captchaToken) {
+    if (errorEl) {
+      errorEl.textContent = "Please check the 'I'm not a robot' reCAPTCHA box above.";
+      errorEl.style.display = 'block';
+    } else {
+      alert('Please complete the reCAPTCHA verification before submitting.');
+    }
+    return;
+  }
+
+  // Set loading state
+  const originalBtnContent = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Sending Inquiry...</span>';
+  form.style.opacity = '0.7';
+
+  try {
+    const formData = new FormData(form);
+    if (!formData.get('g-recaptcha-response') && captchaToken) {
+      formData.set('g-recaptcha-response', captchaToken);
+    }
+    // Also include recaptcha_response for compatibility
+    if (captchaToken) {
+      formData.set('recaptcha_response', captchaToken);
+    }
+
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      form.style.display = 'none';
+      if (msg) msg.style.display = 'block';
+    } else {
+      throw new Error(data.message || 'Submission failed. Please check your details and try again.');
+    }
+  } catch (err) {
+    console.error('Contact form submission error:', err);
+    if (errorEl) {
+      errorEl.textContent = err.message || 'Submission failed. Please call us directly on 020 8914 7832.';
+      errorEl.style.display = 'block';
+    } else {
+      alert(err.message || 'Submission failed. Please call us directly on 020 8914 7832.');
+    }
+    btn.disabled = false;
+    btn.innerHTML = originalBtnContent;
+    form.style.opacity = '1';
+    if (typeof grecaptcha !== 'undefined') {
+      try { grecaptcha.reset(1); } catch(e) {}
+    }
+  }
 }
 
 // 8. FAQ Accordion Toggle
