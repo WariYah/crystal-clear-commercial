@@ -568,6 +568,7 @@ function selectServiceInCalc(serviceId) {
 }
 
 // 7. Form Submissions with Web3Forms & Google reCAPTCHA v2
+const RECAPTCHA_SITE_KEY = '6LeaDMEtAAAAAH1BgOYF_j312MWXYbQKJZsSDQgR';
 async function handleQuoteSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('calcLockInForm');
