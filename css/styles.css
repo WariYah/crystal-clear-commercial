@@ -2876,3 +2876,208 @@ button, input, select, textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Brochure Core Brand Pillars Showcase:
+   'TRUST | QUALITY | RESULTS' & 'CLEANER SAFER BRIGHTER SPACES'
+   ========================================================================== */
+.pillars-showcase-intro {
+  margin-top: 70px;
+  margin-bottom: 35px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.showcase-section-title {
+  font-family: var(--font-heading);
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--primary-navy);
+  margin-top: 14px;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.showcase-section-desc {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.brochure-pillars-showcase {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px;
+  margin-top: 15px;
+}
+
+.pillars-showcase-card {
+  background: linear-gradient(145deg, #07192f 0%, #0d284a 100%);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 16px 40px rgba(7, 25, 47, 0.28);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  position: relative;
+}
+
+.pillars-showcase-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 24px 50px rgba(2, 132, 199, 0.3);
+  border-color: rgba(56, 189, 248, 0.55);
+}
+
+.pillars-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  background: #000000;
+}
+
+.pillars-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pillars-showcase-card:hover .pillars-card-img {
+  transform: scale(1.06);
+}
+
+.pillars-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #07192f 0%, rgba(7, 25, 47, 0.25) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+.pillars-card-tag {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: rgba(3, 105, 161, 0.88);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+}
+
+.pillars-card-content {
+  padding: 30px 32px 34px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.pillars-card-badge-row {
+  margin-bottom: 12px;
+}
+
+.pillar-mini-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+}
+
+.pillars-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, #ffffff 40%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pillars-card-desc {
+  color: rgba(224, 242, 254, 0.88);
+  font-size: 0.96rem;
+  line-height: 1.62;
+  margin-bottom: 22px;
+}
+
+.pillars-card-features {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin-bottom: 26px;
+  flex-grow: 1;
+}
+
+.p-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.91rem;
+  color: #f1f5f9;
+  line-height: 1.5;
+}
+
+.p-feature i {
+  color: var(--accent-cyan);
+  font-size: 0.98rem;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.p-feature span strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.pillars-card-footer {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@media (max-width: 991px) {
+  .pillars-showcase-intro {
+    margin-top: 50px;
+    margin-bottom: 25px;
+  }
+  .showcase-section-title {
+    font-size: 1.7rem;
+  }
+  .brochure-pillars-showcase {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .pillars-card-img-wrap {
+    height: 250px;
+  }
+  .pillars-card-content {
+    padding: 24px 22px 26px;
+  }
+  .pillars-card-title {
+    font-size: 1.28rem;
+  }
+}
