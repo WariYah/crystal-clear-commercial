@@ -49,7 +49,6 @@
           <li><a href="#sectors">Sectors</a></li>
           <li><a href="#quote-calculator" class="nav-highlight">Instant Quote</a></li>
           <li><a href="#why-us">Why Choose Us</a></li>
-          <li><a href="#leadership">Leadership</a></li>
           <li><a href="#testimonials">Testimonials</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -80,7 +79,6 @@
       <li><a href="#sectors" class="drawer-link">Sectors We Serve</a></li>
       <li><a href="#quote-calculator" class="drawer-link">Instant Quote Calculator</a></li>
       <li><a href="#why-us" class="drawer-link">Why Choose Us</a></li>
-      <li><a href="#leadership" class="drawer-link">Leadership Profile</a></li>
       <li><a href="#testimonials" class="drawer-link">Client Reviews</a></li>
       <li><a href="#contact" class="drawer-link">Contact &amp; Location</a></li>
     </ul>
@@ -163,7 +161,6 @@
 
         <div class="hero-card-column">
           <div class="hero-floating-card main-quote-teaser">
-            <div class="card-badge">Instant Site Estimate</div>
             <h3>Let's Make Your Business Crystal Clear</h3>
             <p>Whether you need daily contract cleaning, specialist support, or a one-off deep clean, our team is ready to help.</p>
             <div class="fast-quote-form">
@@ -188,7 +185,7 @@
                 </select>
               </div>
               <a href="#quote-calculator" class="btn btn-primary btn-block">
-                <span>Calculate My Estimate</span>
+                <span>Calculate Instant Quote</span>
                 <i class="fa-solid fa-calculator"></i>
               </a>
             </div>
@@ -867,62 +864,6 @@
       </div>
     </section>
 
-    <!-- Leadership Spotlight (Zainab Deen-Conteh) -->
-    <section class="leadership-section" id="leadership">
-      <div class="container">
-        <div class="leadership-card">
-          <div class="leader-image-col">
-            <img src="assets/images/director_portrait.jpg" alt="Zainab Deen-Conteh - Operations Director" class="leader-img">
-            <div class="leader-badge-float">
-              <strong>OPERATIONS DIRECTOR</strong>
-              <span>Crystal Clear Commercial Services Limited</span>
-            </div>
-          </div>
-          <div class="leader-text-col">
-            <div class="section-tag light"><i class="fa-solid fa-user-tie"></i> EXECUTIVE LEADERSHIP</div>
-            <h2 class="leader-name text-white">Zainab Deen-Conteh</h2>
-            <div class="leader-title">Operations Director</div>
-            
-            <p class="leader-quote">
-              "At Crystal Clear Commercial Services Ltd, we believe that more than just cleaning, our job is about creating environments where people thrive and businesses perform at their highest level. We bring together meticulous attention to detail, trustworthy staff, and reliable systems so our clients never have to worry about the cleanliness and safety of their premises."
-            </p>
-
-            <div class="leader-details-row">
-              <div class="leader-contact-item">
-                <i class="fa-solid fa-phone text-cyan"></i>
-                <div>
-                  <span class="lbl">Direct Operations Line</span>
-                  <a href="tel:02039152310" class="val">0203 915 2310</a>
-                </div>
-              </div>
-              <div class="leader-contact-item">
-                <i class="fa-solid fa-envelope text-cyan"></i>
-                <div>
-                  <span class="lbl">Corporate Correspondence</span>
-                  <a href="mailto:sales@CrystalClearCommercial.uk" class="val">sales@CrystalClearCommercial.uk</a>
-                </div>
-              </div>
-              <div class="leader-contact-item">
-                <i class="fa-solid fa-location-dot text-cyan"></i>
-                <div>
-                  <span class="lbl">London Headquarters</span>
-                  <span class="val">Unit 5A Spaces Business Centre, SW8 3NS</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Digital Business Card Preview from WA0020 -->
-            <div class="biz-card-action">
-              <button class="btn btn-outline" onclick="openBrochureModal()">
-                <i class="fa-solid fa-id-card"></i>
-                <span>View Trifold Brochure &amp; Business Card Designs</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Testimonials Section -->
     <section class="testimonials-section" id="testimonials">
       <div class="container">
@@ -1138,8 +1079,7 @@
           <!-- Contact Form Column -->
           <div class="contact-form-col">
             <div class="form-wrapper">
-              <h3>Request Your Free Quote</h3>
-              <p>Fill in your details below and an Operations specialist will be in touch within 2 hours.</p>
+              <p>Fill in your details below and our team will be in touch within 2 hours.</p>
 
               <form id="mainContactForm" onsubmit="handleContactSubmit(event)">
                 <!-- Web3Forms Configuration -->
@@ -1296,10 +1236,6 @@
             <i class="fa-solid fa-envelope"></i>
             <a href="mailto:sales@CrystalClearCommercial.uk">sales@CrystalClearCommercial.uk</a>
           </p>
-          <div class="footer-cta-box">
-            <span>Operations Director</span>
-            <strong>Zainab Deen-Conteh</strong>
-          </div>
         </div>
       </div>
     </div>
@@ -1326,79 +1262,6 @@
       <button class="modal-close" onclick="closeServiceModal()"><i class="fa-solid fa-xmark"></i></button>
       <div class="modal-content" id="serviceModalContent">
         <!-- Dynamically injected via JavaScript -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Brochure & Business Card Modal (From WA0020) -->
-  <div class="modal-backdrop" id="brochureModal">
-    <div class="modal-dialog modal-lg">
-      <button class="modal-close" onclick="closeBrochureModal()"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-content">
-        <div class="modal-header-styled">
-          <img src="assets/logo/logo.png" alt="Crystal Clear Logo" class="modal-logo">
-          <h3>Official Corporate Identity &amp; Brochure</h3>
-          <p>Extracted from Crystal Clear Commercial Services Limited project print specifications</p>
-        </div>
-        
-        <div class="brochure-modal-grid">
-          <div class="brochure-panel-preview">
-            <h4>Trifold Corporate Brochure (6 Pages)</h4>
-            <div class="brochure-quote-highlight">
-              <strong>"A HIGHER STANDARD — MORE THAN CLEANING"</strong>
-              <p>Comprehensive printed trifold brochure outlining our 13 service areas, client testimonials, CQC hygiene protocols, and London operations contact information.</p>
-            </div>
-            <ul class="brochure-feature-list">
-              <li><i class="fa-solid fa-check text-cyan"></i> Commercial, Retail, Healthcare, Construction &amp; Venue scopes</li>
-              <li><i class="fa-solid fa-check text-cyan"></i> Client reviews from Hospitality, Retail &amp; Office partners</li>
-              <li><i class="fa-solid fa-check text-cyan"></i> Full direct phone, email, and SW8 headquarters address</li>
-            </ul>
-          </div>
-
-          <div class="biz-card-digital-mockup">
-            <h4>Official Business Card</h4>
-            <div class="biz-card-box front">
-              <div class="bc-brand">
-                <strong>CRYSTAL CLEAR</strong>
-                <span>COMMERCIAL SERVICES LIMITED</span>
-              </div>
-              <div class="bc-tag">CLEAN SPACES. STRONGER BUSINESSES.</div>
-              <div class="bc-person">
-                <strong>ZAINAB DEEN-CONTEH</strong>
-                <span>OPERATIONS DIRECTOR</span>
-              </div>
-              <div class="bc-contact">
-                <div><i class="fa-solid fa-phone"></i> 0203 915 2310</div>
-                <div><i class="fa-solid fa-envelope"></i> sales@CrystalClearCommercial.uk</div>
-                <div><i class="fa-solid fa-globe"></i> www.CrystalClearCommercial.uk</div>
-                <div><i class="fa-solid fa-location-dot"></i> Unit 5A Spaces Business Centre, 15-17 Ingate Place, London, SW8 3NS</div>
-              </div>
-            </div>
-
-            <div class="biz-card-box back">
-              <div class="bc-brand-dark">
-                <strong>CRYSTAL CLEAR</strong>
-                <span>PEOPLE · SPACES · STANDARDS · RESULTS</span>
-              </div>
-              <div class="bc-cta-dark">
-                <strong>READY TO MAKE A CHANGE?</strong>
-                <span>Get your FREE, no-obligation quote today.</span>
-                <div class="bc-sub-dark">A CLEANER TOMORROW TOGETHER</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal-footer-styled">
-          <a href="#quote-calculator" class="btn btn-primary" onclick="closeBrochureModal()">
-            <span>Calculate Instant Quote</span>
-            <i class="fa-solid fa-calculator"></i>
-          </a>
-          <a href="tel:02039152310" class="btn btn-outline-dark">
-            <i class="fa-solid fa-phone"></i>
-            <span>Call 0203 915 2310</span>
-          </a>
-        </div>
       </div>
     </div>
   </div>

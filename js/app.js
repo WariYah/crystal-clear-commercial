@@ -408,20 +408,10 @@ function closeServiceModal() {
   document.getElementById('serviceModal').classList.remove('active');
 }
 
-function openBrochureModal() {
-  document.getElementById('brochureModal').classList.add('active');
-}
-
-function closeBrochureModal() {
-  document.getElementById('brochureModal').classList.remove('active');
-}
-
 // Close modals on backdrop click
 window.addEventListener('click', (e) => {
   const serviceModal = document.getElementById('serviceModal');
-  const brochureModal = document.getElementById('brochureModal');
   if (e.target === serviceModal) closeServiceModal();
-  if (e.target === brochureModal) closeBrochureModal();
 });
 
 // 6. Interactive Instant Quote Calculator
