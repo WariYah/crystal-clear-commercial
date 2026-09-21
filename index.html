@@ -47,7 +47,7 @@
         <ul>
           <li><a href="#services">Our Services</a></li>
           <li><a href="#sectors">Sectors</a></li>
-          <li><a href="#quote-calculator" class="nav-highlight">Instant Quote</a></li>
+          <li><a href="#contact" class="nav-highlight">Get a Quote</a></li>
           <li><a href="#why-us">Why Choose Us</a></li>
           <li><a href="#testimonials">Testimonials</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -55,8 +55,8 @@
       </nav>
 
       <div class="header-actions">
-        <a href="#quote-calculator" class="btn btn-primary btn-sm">
-          <span>Free Quote</span>
+        <a href="#contact" class="btn btn-primary btn-sm">
+          <span>Get a Quote</span>
           <i class="fa-solid fa-arrow-right"></i>
         </a>
         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu">
@@ -77,7 +77,7 @@
     <ul class="drawer-nav">
       <li><a href="#services" class="drawer-link">Our Services (13)</a></li>
       <li><a href="#sectors" class="drawer-link">Sectors We Serve</a></li>
-      <li><a href="#quote-calculator" class="drawer-link">Instant Quote Calculator</a></li>
+      <li><a href="#contact" class="drawer-link">Request a Quote</a></li>
       <li><a href="#why-us" class="drawer-link">Why Choose Us</a></li>
       <li><a href="#testimonials" class="drawer-link">Client Reviews</a></li>
       <li><a href="#contact" class="drawer-link">Contact &amp; Location</a></li>
@@ -113,7 +113,7 @@
           </div>
 
           <div class="hero-cta-group">
-            <a href="#quote-calculator" class="btn btn-primary btn-lg">
+            <a href="#contact" class="btn btn-primary btn-lg">
               <span>Free No-Obligation Quote</span>
               <i class="fa-solid fa-angle-right"></i>
             </a>
@@ -184,7 +184,7 @@
                   <option value="deep">One-Off Deep Clean</option>
                 </select>
               </div>
-              <a href="#quote-calculator" class="btn btn-primary btn-block">
+              <a href="#contact" class="btn btn-primary btn-block">
                 <span>Calculate Instant Quote</span>
                 <i class="fa-solid fa-calculator"></i>
               </a>
@@ -594,189 +594,7 @@
                 <div><i class="fa-solid fa-circle-check"></i> Workstation &amp; touchpoint sanitisation</div>
                 <div><i class="fa-solid fa-circle-check"></i> Consumables stock replenishment included</div>
               </div>
-              <a href="#quote-calculator" class="btn btn-primary">Get Office Quote</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Interactive Instant Quote Calculator -->
-    <section class="calculator-section" id="quote-calculator">
-      <div class="container">
-        <div class="calculator-wrapper">
-          <div class="calc-header text-center">
-            <div class="section-tag light"><i class="fa-solid fa-calculator"></i> TRANSPARENT PRICING</div>
-            <h2 class="section-title text-white">Instant Commercial Cleaning Estimator</h2>
-            <p class="section-subtitle text-light">
-              Get an instant cost indication tailored to your facility parameters, followed by a free no-obligation site survey.
-            </p>
-          </div>
-
-          <div class="calculator-body">
-            <div class="calc-controls">
-              <!-- Step 1: Sector -->
-              <div class="calc-group">
-                <label class="calc-label">1. Select Property Type</label>
-                <div class="calc-sector-grid">
-                  <label class="calc-radio-card active">
-                    <input type="radio" name="propertyType" value="office" checked onchange="calculateQuote()">
-                    <i class="fa-solid fa-building"></i>
-                    <span>Office / Commercial</span>
-                  </label>
-                  <label class="calc-radio-card">
-                    <input type="radio" name="propertyType" value="retail" onchange="calculateQuote()">
-                    <i class="fa-solid fa-shop"></i>
-                    <span>Retail / Showroom</span>
-                  </label>
-                  <label class="calc-radio-card">
-                    <input type="radio" name="propertyType" value="medical" onchange="calculateQuote()">
-                    <i class="fa-solid fa-hospital"></i>
-                    <span>Medical / Clinic</span>
-                  </label>
-                  <label class="calc-radio-card">
-                    <input type="radio" name="propertyType" value="construction" onchange="calculateQuote()">
-                    <i class="fa-solid fa-hard-hat"></i>
-                    <span>Post-Construction</span>
-                  </label>
-                  <label class="calc-radio-card">
-                    <input type="radio" name="propertyType" value="venue" onchange="calculateQuote()">
-                    <i class="fa-solid fa-martini-glass"></i>
-                    <span>Venue / Leisure</span>
-                  </label>
-                  <label class="calc-radio-card">
-                    <input type="radio" name="propertyType" value="serviced" onchange="calculateQuote()">
-                    <i class="fa-solid fa-bed"></i>
-                    <span>Serviced Living</span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Step 2: Size Slider -->
-              <div class="calc-group">
-                <div class="calc-slider-header">
-                  <label class="calc-label" for="areaSlider">2. Facility Floor Area</label>
-                  <span class="calc-slider-value"><span id="areaDisplay">2,500</span> sq ft</span>
-                </div>
-                <input type="range" id="areaSlider" min="500" max="30000" step="500" value="2500" class="custom-range" oninput="updateArea(this.value)">
-                <div class="slider-marks">
-                  <span>500 sq ft (Boutique)</span>
-                  <span>10,000 sq ft (Floorplate)</span>
-                  <span>30,000+ sq ft (Complex)</span>
-                </div>
-              </div>
-
-              <!-- Step 3: Frequency -->
-              <div class="calc-group">
-                <label class="calc-label">3. Cleaning Frequency</label>
-                <div class="freq-options">
-                  <label class="freq-btn active">
-                    <input type="radio" name="freq" value="daily" checked onchange="calculateQuote()">
-                    <strong>Daily Contract</strong>
-                    <span>5 - 7 days/wk</span>
-                  </label>
-                  <label class="freq-btn">
-                    <input type="radio" name="freq" value="3x" onchange="calculateQuote()">
-                    <strong>3x per Week</strong>
-                    <span>Mon / Wed / Fri</span>
-                  </label>
-                  <label class="freq-btn">
-                    <input type="radio" name="freq" value="weekly" onchange="calculateQuote()">
-                    <strong>Weekly Clean</strong>
-                    <span>Thorough weekly</span>
-                  </label>
-                  <label class="freq-btn">
-                    <input type="radio" name="freq" value="deep" onchange="calculateQuote()">
-                    <strong>One-Off Deep</strong>
-                    <span>Intensive clean</span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Step 4: Add-Ons -->
-              <div class="calc-group">
-                <label class="calc-label">4. Optional Specialist Add-Ons</label>
-                <div class="addons-grid">
-                  <label class="addon-checkbox">
-                    <input type="checkbox" id="addonWindows" onchange="calculateQuote()">
-                    <span class="checkbox-box"><i class="fa-solid fa-check"></i></span>
-                    <span class="addon-name"><i class="fa-solid fa-wand-magic-sparkles"></i> Pure Water Window Cleaning</span>
-                  </label>
-                  <label class="addon-checkbox">
-                    <input type="checkbox" id="addonCarpets" onchange="calculateQuote()">
-                    <span class="checkbox-box"><i class="fa-solid fa-check"></i></span>
-                    <span class="addon-name"><i class="fa-solid fa-rug"></i> Carpet &amp; Hard Floor Buffing</span>
-                  </label>
-                  <label class="addon-checkbox">
-                    <input type="checkbox" id="addonJanitorial" onchange="calculateQuote()">
-                    <span class="checkbox-box"><i class="fa-solid fa-check"></i></span>
-                    <span class="addon-name"><i class="fa-solid fa-soap"></i> Washroom Consumables Supply</span>
-                  </label>
-                  <label class="addon-checkbox">
-                    <input type="checkbox" id="addonHandyman" onchange="calculateQuote()">
-                    <span class="checkbox-box"><i class="fa-solid fa-check"></i></span>
-                    <span class="addon-name"><i class="fa-solid fa-wrench"></i> Handyman On-Call Support</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- Estimate Output Panel -->
-            <div class="calc-result-panel">
-              <div class="result-card">
-                <div class="result-badge">ESTIMATED INVESTMENT</div>
-                <div class="result-price">
-                  <span class="currency">£</span>
-                  <span class="amount" id="priceDisplay">390</span>
-                  <span class="period" id="periodDisplay">/ month</span>
-                </div>
-                <p class="result-breakdown" id="breakdownNote">
-                  Includes trained personnel, commercial eco-chemicals, machinery, quality audits &amp; account manager.
-                </p>
-
-                <div class="result-highlights">
-                  <div class="rh-item"><i class="fa-solid fa-check-double text-cyan"></i> No Hidden Equipment Fees</div>
-                  <div class="rh-item"><i class="fa-solid fa-check-double text-cyan"></i> Free Site Survey Included</div>
-                  <div class="rh-item"><i class="fa-solid fa-check-double text-cyan"></i> 30-Day Flexible Trial Terms</div>
-                </div>
-
-                <div class="lock-in-box">
-                  <h4>Lock In This Quote &amp; Book Free Survey</h4>
-                  <form id="calcLockInForm" onsubmit="handleQuoteSubmit(event)">
-                    <!-- Web3Forms Configuration -->
-                    <input type="hidden" name="access_key" value="3f22365c-f259-4e62-88ad-e85698c4e851">
-                    <input type="hidden" name="subject" value="New Instant Quote &amp; Survey Request - Crystal Clear">
-                    <input type="hidden" name="from_name" value="Crystal Clear Quote Estimator">
-                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-                    
-                    <!-- Dynamic Calculator Breakdown -->
-                    <input type="hidden" name="selected_sector" id="calcHiddenPropType" value="">
-                    <input type="hidden" name="floor_area" id="calcHiddenArea" value="">
-                    <input type="hidden" name="frequency" id="calcHiddenFreq" value="">
-                    <input type="hidden" name="selected_addons" id="calcHiddenAddons" value="">
-                    <input type="hidden" name="estimated_cost" id="calcHiddenPrice" value="">
-
-                    <div class="form-row">
-                      <input type="text" id="quoteName" name="name" placeholder="Your Name" required class="input-light">
-                      <input type="tel" id="quotePhone" name="phone" placeholder="Phone Number" required class="input-light">
-                    </div>
-                    <input type="email" id="quoteEmail" name="email" placeholder="Company Email Address" required class="input-light">
-                    <input type="text" id="quoteAddress" name="site_address" placeholder="Site Postcode / London Address" required class="input-light">
-                    
-                    <!-- Web3Forms Free Spam Protection (hCaptcha) -->
-                    <div class="h-captcha" data-captcha="true" style="margin-bottom: 12px;"></div>
-                    <div id="calcFormError" class="form-error-msg" style="display: none; color: #ff6b6b; margin-bottom: 10px; font-size: 0.85rem; text-align: center; background: rgba(255,0,0,0.1); padding: 8px; border-radius: 4px;"></div>
-
-                    <button type="submit" id="calcSubmitBtn" class="btn btn-primary btn-block">
-                      <span>Request Formal Quote &amp; Survey</span>
-                      <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                  </form>
-                  <div id="quoteSuccessMessage" class="success-message" style="display: none;">
-                    <i class="fa-solid fa-circle-check"></i> Thank you! Your estimate and survey request has been received. Our team will contact you within 2 hours.
-                  </div>
-                </div>
-              </div>
+              <a href="#contact" class="btn btn-primary">Request Office Quote</a>
             </div>
           </div>
         </div>
@@ -1216,7 +1034,7 @@
             <li><a href="#services" onclick="openServiceModal('medical-cleaning')">Medical Cleaning</a></li>
             <li><a href="#services" onclick="openServiceModal('floor-maintenance')">Floor Maintenance</a></li>
             <li><a href="#services" onclick="openServiceModal('housekeeping-services')">Housekeeping</a></li>
-            <li><a href="#quote-calculator">Instant Quote Calculator</a></li>
+            <li><a href="#contact">Request a Quote</a></li>
           </ul>
         </div>
 
@@ -1272,7 +1090,7 @@
       <i class="fa-solid fa-phone"></i>
       <span class="tooltip">Call 0203 915 2310</span>
     </a>
-    <a href="#quote-calculator" class="floating-btn quote-btn" aria-label="Get Quote">
+    <a href="#contact" class="floating-btn quote-btn" aria-label="Get Quote">
       <i class="fa-solid fa-calculator"></i>
       <span class="tooltip">Instant Quote</span>
     </a>

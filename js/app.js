@@ -293,7 +293,7 @@ function switchSector(key) {
         <div class="sector-features">
           ${data.features.map(f => `<div><i class="fa-solid fa-circle-check"></i> ${f}</div>`).join('')}
         </div>
-        <a href="#quote-calculator" class="btn btn-primary">Get ${data.badge} Quote</a>
+        <a href="#contact" class="btn btn-primary">Request ${data.badge} Quote</a>
       </div>
     </div>
   `;
@@ -348,8 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('currentYear');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Run initial calculator
-  calculateQuote();
 });
 
 // 5. Service Specification Modal
@@ -394,7 +392,7 @@ function openServiceModal(serviceId) {
 
     <div style="display: flex; gap: 12px; justify-content: flex-end;">
       <button class="btn btn-outline-dark" onclick="closeServiceModal()">Close</button>
-      <a href="#quote-calculator" class="btn btn-primary" onclick="closeServiceModal(); selectServiceInCalc('${serviceId}');">
+      <a href="#contact" class="btn btn-primary" onclick="closeServiceModal(); selectServiceInCalc('${serviceId}');">
         <span>Request Quote for This Service</span>
         <i class="fa-solid fa-arrow-right"></i>
       </a>
@@ -414,261 +412,39 @@ window.addEventListener('click', (e) => {
   if (e.target === serviceModal) closeServiceModal();
 });
 
-// 6. Interactive Instant Quote Calculator
-function updateArea(val) {
-  document.getElementById('areaDisplay').textContent = parseInt(val).toLocaleString();
-  calculateQuote();
-}
+// 6. Pre-fill Contact Form from Service Modals
+function selectServiceInContact(serviceId) {
+  const select = document.getElementById('contactService');
+  if (!select) return;
 
-function calculateQuote() {
-  const area = parseInt(document.getElementById('areaSlider').value) || 2500;
-  
-  // Property Type Multiplier
-  const propEl = document.querySelector('input[name="propertyType"]:checked');
-  const propType = propEl ? propEl.value : 'office';
-  const propMultipliers = {
-    office: 1.0,
-    retail: 1.1,
-    medical: 1.35,
-    construction: 1.45,
-    venue: 1.2,
-    serviced: 1.15
-  };
-  const propMult = propMultipliers[propType] || 1.0;
-
-  // Frequency
-  const freqEl = document.querySelector('input[name="freq"]:checked');
-  const freq = freqEl ? freqEl.value : 'daily';
-
-  // Base rate calculation per sq ft per visit
-  let baseRate = 0.045; // £ per sq ft base
-  let visitsPerMonth = 22;
-  let isOneOff = false;
-
-  if (freq === 'daily') {
-    visitsPerMonth = 22;
-    baseRate = 0.042;
-  } else if (freq === '3week') {
-    visitsPerMonth = 13;
-    baseRate = 0.052;
-  } else if (freq === 'weekly') {
-    visitsPerMonth = 4.33;
-    baseRate = 0.068;
-  } else if (freq === 'deep') {
-    visitsPerMonth = 1;
-    baseRate = 0.16;
-    isOneOff = true;
-  }
-
-  // Calculate monthly cost
-  let total = area * baseRate * propMult;
-
-  // Floor scale attenuation for large spaces
-  if (area > 5000) {
-    total = total * 0.92;
-  }
-  if (area > 15000) {
-    total = total * 0.86;
-  }
-
-  // Minimum thresholds
-  if (!isOneOff && total < 280) total = 280;
-  if (isOneOff && total < 350) total = 350;
-
-  // Add-ons
-  let addonCost = 0;
-  if (document.getElementById('addonWindows').checked) {
-    addonCost += isOneOff ? 120 : (area > 5000 ? 160 : 85);
-  }
-  if (document.getElementById('addonCarpets').checked) {
-    addonCost += isOneOff ? 180 : (area > 5000 ? 220 : 110);
-  }
-  if (document.getElementById('addonJanitorial').checked) {
-    addonCost += isOneOff ? 50 : 95;
-  }
-  if (document.getElementById('addonHandyman').checked) {
-    addonCost += isOneOff ? 150 : 180;
-  }
-
-  total += addonCost;
-
-  // Animate Price
-  const rounded = Math.round(total);
-  animateValue('priceDisplay', parseInt(document.getElementById('priceDisplay').textContent.replace(/,/g, '')) || 0, rounded, 350);
-
-  const periodEl = document.getElementById('periodDisplay');
-  const noteEl = document.getElementById('breakdownNote');
-
-  if (isOneOff) {
-    periodEl.textContent = '/ one-off project';
-    noteEl.textContent = 'Includes complete intensive deep clean, heavy equipment, sanitisation certificate & inspection.';
-  } else {
-    periodEl.textContent = '/ month';
-    noteEl.textContent = 'Includes dedicated trained personnel, commercial eco-chemicals, quality audits & London account manager.';
-  }
-}
-
-// Numerical Counter Animation
-function animateValue(id, start, end, duration) {
-  const obj = document.getElementById(id);
-  if (!obj) return;
-  if (start === end) return;
-  const range = end - start;
-  let current = start;
-  const increment = end > start ? 1 : -1;
-  const stepTime = Math.abs(Math.floor(duration / Math.max(Math.abs(range), 1)));
-  const timer = setInterval(() => {
-    current += increment * Math.ceil(Math.abs(range) / 20);
-    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-      current = end;
-      clearInterval(timer);
-    }
-    obj.textContent = current.toLocaleString();
-  }, Math.max(stepTime, 16));
-}
-
-// Pre-fill calculator from service cards
-function selectServiceInCalc(serviceId) {
-  const mappings = {
-    'commercial-contract': { prop: 'office', freq: 'daily' },
-    'daily-office': { prop: 'office', freq: 'daily' },
-    'retail-venue': { prop: 'retail', freq: 'daily' },
-    'property-construction': { prop: 'construction', freq: 'deep' },
-    'deep-cleaning': { prop: 'office', freq: 'deep' },
-    'medical-cleaning': { prop: 'medical', freq: 'daily' },
-    'housekeeping-services': { prop: 'serviced', freq: '3week' }
+  const serviceNameMap = {
+    'commercial-contract': 'Commercial & Contract Cleaning',
+    'daily-office': 'Daily Office Cleaning',
+    'retail-venue': 'Retail & Venue Cleaning',
+    'property-construction': 'Property & Construction Cleaning',
+    'deep-cleaning': 'Deep Cleaning & Sanitisation',
+    'handyman-services': 'Handyman Services',
+    'window-cleaning': 'Window Cleaning',
+    'janitorial-services': 'Janitorial Services',
+    'trauma-cleaning': 'Trauma & Extreme Cleaning',
+    'compliance-cleaning': 'Specialist & Compliance Cleaning',
+    'medical-cleaning': 'Medical Cleaning',
+    'floor-maintenance': 'Floor Maintenance & Cleaning',
+    'housekeeping-services': 'Housekeeping Services'
   };
 
-  const map = mappings[serviceId];
-  if (map) {
-    const propRadio = document.querySelector(`input[name="propertyType"][value="${map.prop}"]`);
-    if (propRadio) {
-      propRadio.checked = true;
-      document.querySelectorAll('.calc-radio-card').forEach(c => c.classList.remove('active'));
-      propRadio.closest('.calc-radio-card').classList.add('active');
+  const targetVal = serviceNameMap[serviceId];
+  if (targetVal) {
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].value === targetVal || select.options[i].text.includes(targetVal)) {
+        select.selectedIndex = i;
+        break;
+      }
     }
-    const freqRadio = document.querySelector(`input[name="freq"][value="${map.freq}"]`);
-    if (freqRadio) {
-      freqRadio.checked = true;
-      document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
-      freqRadio.closest('.freq-btn').classList.add('active');
-    }
-    calculateQuote();
   }
 }
 
 // 7. Form Submissions with Web3Forms & Free Spam Protection
-async function handleQuoteSubmit(e) {
-  e.preventDefault();
-  const form = document.getElementById('calcLockInForm');
-  const msg = document.getElementById('quoteSuccessMessage');
-  const errorEl = document.getElementById('calcFormError');
-  const btn = document.getElementById('calcSubmitBtn') || form.querySelector('button[type="submit"]');
-
-  if (errorEl) {
-    errorEl.style.display = 'none';
-    errorEl.textContent = '';
-  }
-
-  // Check hCaptcha response if widget is present and initialized
-  const hCaptchaTextarea = form.querySelector('[name="h-captcha-response"]');
-  if (hCaptchaTextarea && !hCaptchaTextarea.value.trim()) {
-    if (errorEl) {
-      errorEl.textContent = "Please complete the captcha verification checkbox above.";
-      errorEl.style.display = 'block';
-    } else {
-      alert("Please complete the captcha verification checkbox before submitting.");
-    }
-    return;
-  }
-
-  // Populate dynamic calculator data into hidden inputs
-  const propEl = document.querySelector('input[name="propertyType"]:checked');
-  const freqEl = document.querySelector('input[name="freq"]:checked');
-  const areaVal = document.getElementById('areaSlider') ? document.getElementById('areaSlider').value : '2500';
-  const priceVal = document.getElementById('priceDisplay') ? document.getElementById('priceDisplay').textContent : '';
-  const periodVal = document.getElementById('periodDisplay') ? document.getElementById('periodDisplay').textContent : '';
-
-  const addons = [];
-  if (document.getElementById('addonWindows') && document.getElementById('addonWindows').checked) addons.push('Commercial Window Cleaning');
-  if (document.getElementById('addonCarpets') && document.getElementById('addonCarpets').checked) addons.push('Hot Water Carpet Extraction');
-  if (document.getElementById('addonJanitorial') && document.getElementById('addonJanitorial').checked) addons.push('Washroom & Janitorial Restocking');
-  if (document.getElementById('addonHandyman') && document.getElementById('addonHandyman').checked) addons.push('Facility Handyman & Minor Repairs');
-
-  const propNameMap = {
-    office: 'Office / Commercial',
-    retail: 'Retail Store / Showroom',
-    medical: 'Medical & Healthcare Facility',
-    construction: 'Post-Construction Site',
-    venue: 'Venue / Hospitality',
-    serviced: 'Serviced Accommodation / HMO'
-  };
-
-  const freqNameMap = {
-    daily: 'Daily Commercial Service',
-    '3week': '3x per Week',
-    weekly: 'Weekly Commercial Clean',
-    deep: 'One-Off Intensive Deep Clean'
-  };
-
-  const selectedPropKey = propEl ? propEl.value : 'office';
-  const selectedFreqKey = freqEl ? freqEl.value : 'daily';
-
-  if (document.getElementById('calcHiddenPropType')) {
-    document.getElementById('calcHiddenPropType').value = propNameMap[selectedPropKey] || selectedPropKey;
-  }
-  if (document.getElementById('calcHiddenArea')) {
-    document.getElementById('calcHiddenArea').value = parseInt(areaVal).toLocaleString() + ' sq ft';
-  }
-  if (document.getElementById('calcHiddenFreq')) {
-    document.getElementById('calcHiddenFreq').value = freqNameMap[selectedFreqKey] || selectedFreqKey;
-  }
-  if (document.getElementById('calcHiddenAddons')) {
-    document.getElementById('calcHiddenAddons').value = addons.length > 0 ? addons.join(', ') : 'None selected';
-  }
-  if (document.getElementById('calcHiddenPrice')) {
-    document.getElementById('calcHiddenPrice').value = '£' + priceVal + ' ' + periodVal;
-  }
-
-  // Set loading state
-  const originalBtnContent = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Sending Request...</span>';
-  form.style.opacity = '0.7';
-
-  try {
-    const formData = new FormData(form);
-
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: formData
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      form.style.display = 'none';
-      if (msg) msg.style.display = 'block';
-    } else {
-      throw new Error(data.message || 'Submission failed. Please check your details and try again.');
-    }
-  } catch (err) {
-    console.error('Quote form submission error:', err);
-    if (errorEl) {
-      errorEl.textContent = err.message || 'Submission failed. Please call us directly on 020 8914 7832.';
-      errorEl.style.display = 'block';
-    } else {
-      alert(err.message || 'Submission failed. Please call us directly on 020 8914 7832.');
-    }
-    btn.disabled = false;
-    btn.innerHTML = originalBtnContent;
-    form.style.opacity = '1';
-    if (typeof hcaptcha !== 'undefined' && typeof hcaptcha.reset === 'function') {
-      try { hcaptcha.reset(); } catch(e) {}
-    }
-  }
-}
-
 async function handleContactSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('mainContactForm');
