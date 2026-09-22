@@ -255,7 +255,7 @@ const sectorData = {
   hospitality: {
     badge: 'Hospitality & Venues',
     title: 'Restaurants, Event Venues & Boutique Hotels',
-    img: 'assets/images/retail_venue.jpg',
+    img: 'assets/images/hospitality_venue.jpg',
     desc: 'The hospitality industry demands relentless hygiene. We work closely with restaurant managers, event venues, private members clubs, and luxury accommodation hosts to provide seamless turnaround cleans, kitchen deep scrubs, and immaculate front-of-house spaces.',
     features: [
       'Late-night post-service closing cleans',
